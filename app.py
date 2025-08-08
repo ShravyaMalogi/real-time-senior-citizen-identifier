@@ -16,7 +16,6 @@ st.title("👵 Real-Time Senior Citizen Identifier")
 video_file = st.file_uploader("📤 Upload a Video", type=["mp4", "avi", "mov"])
 
 if video_file:
-    # Save uploaded video to temp
     temp_dir = tempfile.mkdtemp()
     temp_path = os.path.join(temp_dir, video_file.name)
     with open(temp_path, 'wb') as f:
@@ -30,7 +29,7 @@ if video_file:
     frame_count = 0
     processed_faces = set()
     total_detected = 0
-    frame_skip = 10  # Speed up processing by skipping frames
+    frame_skip = 10  
 
     while cap.isOpened():
         ret, frame = cap.read()
@@ -41,7 +40,6 @@ if video_file:
         if frame_count % frame_skip != 0:
             continue
 
-        # Resize to reduce lag
         frame = cv2.resize(frame, (640, 360))
         start_time = time.time()
         total_seniors = 0
@@ -57,11 +55,11 @@ if video_file:
             label = f"{gender}, {age} yrs"
 
             if (x, y) not in processed_faces:
-                log_visit(age, gender)  # ✅ Log ALL entries
+                log_visit(age, gender)  
                 processed_faces.add((x, y))
 
                 if age >= 60:
-                    total_seniors += 1  # ✅ Only seniors are counted
+                    total_seniors += 1  
 
             color = (0, 0, 255) if age >= 60 else (0, 255, 0)
             cv2.rectangle(frame, (x, y), (x + w, y + h), color, 2)
