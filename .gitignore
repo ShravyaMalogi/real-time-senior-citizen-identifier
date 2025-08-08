@@ -1,0 +1,4 @@
+model/*
+
+!model/.gitkeep
+!model/download_model.py
