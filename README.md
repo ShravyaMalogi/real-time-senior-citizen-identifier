@@ -6,7 +6,7 @@
 [![TensorFlow](https://img.shields.io/badge/TensorFlow-2.x-orange)](https://www.tensorflow.org/)  
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)  
 
-> Detect multiple people in real-time, predict their age, and identify **senior citizens** instantly.  
+> Detect multiple people in real-time, predict their age & gender, and identify **senior citizens** instantly.  
 
 ---
 
