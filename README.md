@@ -22,7 +22,13 @@ It also logs the **age, gender, and timestamp** of each senior citizen to a CSV/
 - 🧓 Flags individuals **60 years & older**  
 - 📊 Logs details (age, gender, timestamp) to CSV/Excel  
 - 👥 Detects **multiple people** at once  
-- ⚡ Works with **webcam** or **video files**  
+- ⚡ Works with **webcam** or **video files**
+
+---
+
+## 📂 Dataset  
+- **Source:** [UTK-Face Dataset](https://www.kaggle.com/datasets/jangedoo/utkface-new)  
+- **Format Used:** Pre-cropped faces about 20,000 in number  
 
 ---
 
