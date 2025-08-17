@@ -26,6 +26,41 @@ It also logs the **age, gender, and timestamp** of each senior citizen to a CSV/
 
 ---
 
+## 📂 Repository Structure
+
+```
+
+real-time-senior-citizen-identifier/
+├── app.py
+│
+├── src/
+│ ├── detector.py
+│ ├── predictor.py
+│ └── logger.py
+│
+├── models/
+│ └── my_model.keras
+│
+├── notebooks/
+│ └── train_model.ipynb
+│
+├── data/
+│ ├── input/
+│ │ └── sample_input.mp4
+│ └── output/
+│   └── sample_output.mp4
+│
+├── results/
+│ ├── metrics.txt
+│ └── confusion_matrix.png
+│
+├── requirements.txt
+└── README.md
+
+```
+
+---
+
 ## 📂 Dataset  
 - **Source:** [UTK-Face Dataset](https://www.kaggle.com/datasets/jangedoo/utkface-new)  
 - **Format Used:** Pre-cropped faces about 20,000 in number  
