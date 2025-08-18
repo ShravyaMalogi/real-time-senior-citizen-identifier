@@ -1,27 +1,41 @@
 import csv
 import os
-from datetime import datetime
+from datetime import datetime, timedelta
 
 LOG_DIR = os.path.join(os.path.dirname(__file__), '..', 'data')
 os.makedirs(LOG_DIR, exist_ok=True)
 
 LOG_FILE = os.path.join(LOG_DIR, 'visit_log.csv')
 
-def log_visit(age, gender):
-    timestamp = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+# Keep track of last logged visits
+last_logged = {}
+
+def log_visit(age, gender, cooldown=30, age_tolerance=2):
+    """
+    Log a visit only if not logged in the last `cooldown` seconds.
+    Age predictions are considered the same if within `age_tolerance`.
+    """
+    global last_logged
+    timestamp = datetime.now()
     file_exists = os.path.isfile(LOG_FILE)
 
-    try:
-        print(f"[LOGGER] Logging to: {LOG_FILE}")
-        print(f"[LOGGER] Age: {age}, Gender: {gender}, Timestamp: {timestamp}")
+    # Round age group for tolerance
+    key = (round(age / age_tolerance), gender)
 
+    if key in last_logged:
+        # Skip if logged too recently
+        if (timestamp - last_logged[key]) < timedelta(seconds=cooldown):
+            print(f"[LOGGER] Skipping duplicate log for approx age {age} ({gender})")
+            return  
+
+    try:
         with open(LOG_FILE, mode='a', newline='') as file:
             writer = csv.writer(file)
             if not file_exists:
-                print("[LOGGER] Writing header...")
                 writer.writerow(['Age', 'Gender', 'Timestamp'])
-            writer.writerow([age, gender, timestamp])
-            print("[LOGGER] Log entry written successfully.")
+            writer.writerow([age, gender, timestamp.strftime("%Y-%m-%d %H:%M:%S")])
+            print(f"[LOGGER] Logged: {age}, {gender}")
+            last_logged[key] = timestamp  # update last log time
 
     except Exception as e:
         print(f"[LOGGER ERROR] Failed to write log: {e}")

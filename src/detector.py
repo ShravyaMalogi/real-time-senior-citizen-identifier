@@ -1,9 +1,10 @@
 # src/detector.py
 import numpy as np
+import math
 from mtcnn import MTCNN
 
 class MTCNNFaceDetector:
-    def __init__(self, min_face_size=40, conf_threshold=0.85):
+    def __init__(self, min_face_size=55, conf_threshold=0.85):
         self.detector = MTCNN(min_face_size=min_face_size)
         self.conf_threshold = conf_threshold
 
@@ -25,52 +26,54 @@ class MTCNNFaceDetector:
 
         return results
 
-class FaceTracker:
-    def __init__(self, max_distance=80):
-        self.next_face_id = 0
-        self.tracks = {}  # face_id → (x,y)
 
+class FaceTracker:
+    def __init__(self, max_distance=50, max_age=10):
+        self.next_face_id = 0
+        self.tracks = {}  # face_id -> {"box": (x0,y0,x1,y1), "age": 0}
         self.max_distance = max_distance
+        self.max_age = max_age
 
     def _center(self, box):
         x0, y0, x1, y1 = box
         return (int((x0 + x1) / 2), int((y0 + y1) / 2))
 
-    def update(self, detections):
-        """
-        Args:
-            detections: list of (x0, y0, x1, y1) tuples
-        Returns:
-            list of (face_id, (x0, y0, x1, y1))
-        """
-        def iou(boxA, boxB):
-            xA = max(boxA[0], boxB[0])
-            yA = max(boxA[1], boxB[1])
-            xB = min(boxA[2], boxB[2])
-            yB = min(boxA[3], boxB[3])
-            interArea = max(0, xB - xA) * max(0, yB - yA)
-            boxAArea = (boxA[2] - boxA[0]) * (boxA[3] - boxA[1])
-            boxBArea = (boxB[2] - boxB[0]) * (boxB[3] - boxB[1])
-            return interArea / float(boxAArea + boxBArea - interArea + 1e-6)
+    def _distance(self, boxA, boxB):
+        cA = self._center(boxA)
+        cB = self._center(boxB)
+        return math.sqrt((cA[0] - cB[0]) ** 2 + (cA[1] - cB[1]) ** 2)
 
+    def update(self, detections):
         updated_tracks = {}
         results = []
 
         for det in detections:
             assigned_id = None
-            best_iou = 0
-            for face_id, prev_det in self.tracks.items():
-                iou_score = iou(det, prev_det)
-                if iou_score > best_iou and iou_score > 0.3:  # threshold
-                    best_iou = iou_score
+            best_dist = 1e9
+
+            for face_id, data in self.tracks.items():
+                prev_det = data["box"]
+                dist = self._distance(det, prev_det)
+
+                if dist < best_dist and dist < self.max_distance:
+                    best_dist = dist
                     assigned_id = face_id
 
             if assigned_id is None:
                 assigned_id = self.next_face_id
                 self.next_face_id += 1
 
-            updated_tracks[assigned_id] = det
+            updated_tracks[assigned_id] = {"box": det, "age": 0}
             results.append((assigned_id, det))
+
+        # Increment "age" for unmatched tracks (memory effect)
+        for face_id, data in self.tracks.items():
+            if face_id not in updated_tracks:
+                data["age"] += 1
+                if data["age"] < self.max_age:
+                    updated_tracks[face_id] = data  # keep it for a while
 
         self.tracks = updated_tracks
         return results
+
+
