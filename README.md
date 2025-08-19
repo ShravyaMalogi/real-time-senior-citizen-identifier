@@ -38,21 +38,33 @@ real-time-senior-citizen-identifier/
 │ ├── predictor.py
 │ └── logger.py
 │
-├── models/
-│ └── my_model.keras
+├── utils/
+│ └── preprocessing.py
+│
+├── model/
+│ └── age_gender_model_v.keras
 │
 ├── notebooks/
-│ └── train_model.ipynb
+│ ├── age_gender_model.ipynb
+│ └── evaluation.ipynb
 │
 ├── data/
+│ └── visit_log.csv
+│
+├── samples/
 │ ├── input/
 │ │ └── sample_input.mp4
-│ └── output/
-│   └── sample_output.mp4
+│ ├── output/
+│ │ └── sample_output.mp4
+│ └── Visualization.jpg
 │
 ├── results/
-│ ├── metrics.txt
-│ └── confusion_matrix.png
+│ ├── MAE & Accuracy.png
+│ ├── classification report.png
+│ ├── confusion matrix.png
+│ ├── evaluation metrics.png
+│ ├── scatter plot.png
+│ └── Actual vs Predicted.png
 │
 ├── requirements.txt
 └── README.md
