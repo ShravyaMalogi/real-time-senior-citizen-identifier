@@ -8,19 +8,17 @@ import time
 from collections import defaultdict, deque
 from mtcnn import MTCNN
 
-# Add src/ folder to import path
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), 'src')))
 
 from detector import FaceTracker
 from predictor import predict_age_gender
 from logger import log_visit
 
-st.title("👵 Real-Time Senior Citizen Identifier (MTCNN + Face Tracking)")
+st.title("👵 Real-Time Senior Citizen Identifier")
 
 video_file = st.file_uploader("📤 Upload a Video", type=["mp4", "avi", "mov"])
 
-# Helper: decide if logging is needed
-last_logged = {}  # face_id -> (age, gender)
+last_logged = {}  
 def should_log(face_id, age, gender):
     if face_id not in last_logged:
         last_logged[face_id] = (age, gender)
@@ -56,7 +54,7 @@ if video_file:
         "confidences": deque(maxlen=SMOOTHING_WINDOW)
     })
 
-    active_faces = {}  # face_id -> {"age": int, "gender": str}
+    active_faces = {} 
 
     fps_history = deque(maxlen=30)
     FACE_MARGIN = 0.3
@@ -81,7 +79,6 @@ if video_file:
         display_frame = cv2.resize(frame, (640, 360))
         start_time = time.time()
 
-        # Detect faces
         detections = detector.detect_faces(frame)
         boxes = []
         for res in detections:
@@ -97,7 +94,6 @@ if video_file:
         tracked_faces = tracker.update(boxes)
         current_face_ids = set([fid for fid, _ in tracked_faces])
 
-        # Handle disappeared faces → log their last values
         disappeared = set(active_faces.keys()) - current_face_ids
         for fid in disappeared:
             last_age, last_gender = active_faces[fid]["age"], active_faces[fid]["gender"]
@@ -107,7 +103,6 @@ if video_file:
                     total_seniors += 1
             del active_faces[fid]
 
-        # Process active tracked faces
         for face_id, (x0, y0, x1, y1) in tracked_faces:
             if x1 <= x0 or y1 <= y0:
                 continue
@@ -123,10 +118,8 @@ if video_file:
                 print(f"[ERROR] Prediction failed for {face_id}: {e}")
                 continue
 
-            # Update active faces
             active_faces[face_id] = {"age": age, "gender": gender}
 
-            # Draw box + label
             label = f"{gender}, {age} yrs"
             color = (0, 0, 255) if age >= 60 else (0, 255, 0)
 
@@ -144,7 +137,6 @@ if video_file:
                         (int(x0*scale_x), int(y0*scale_y)-10),
                         cv2.FONT_HERSHEY_SIMPLEX, 0.6, color, 2)
 
-        # FPS
         fps = 1.0 / (time.time() - start_time + 1e-6)
         fps_history.append(fps)
         smooth_fps = np.mean(fps_history)
@@ -158,7 +150,6 @@ if video_file:
 
         out.write(original_frame)
 
-    # Log remaining faces
     for fid, data in active_faces.items():
         if data["age"] is not None and should_log(fid, data["age"], data["gender"]):
             log_visit(data["age"], data["gender"])
