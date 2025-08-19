@@ -86,7 +86,7 @@ real-time-senior-citizen-identifier/
 
 ## 📈 Example Output  
 
-
+<img src="/samples/Visualization.jpg" alt="Sample Output" width="1200"/>
 
 ---
 
