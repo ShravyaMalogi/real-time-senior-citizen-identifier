@@ -7,7 +7,6 @@ os.makedirs(LOG_DIR, exist_ok=True)
 
 LOG_FILE = os.path.join(LOG_DIR, 'visit_log.csv')
 
-# Keep track of last logged visits
 last_logged = {}
 
 def log_visit(age, gender, cooldown=30, age_tolerance=2):
@@ -19,11 +18,9 @@ def log_visit(age, gender, cooldown=30, age_tolerance=2):
     timestamp = datetime.now()
     file_exists = os.path.isfile(LOG_FILE)
 
-    # Round age group for tolerance
     key = (round(age / age_tolerance), gender)
 
     if key in last_logged:
-        # Skip if logged too recently
         if (timestamp - last_logged[key]) < timedelta(seconds=cooldown):
             print(f"[LOGGER] Skipping duplicate log for approx age {age} ({gender})")
             return  
@@ -35,7 +32,7 @@ def log_visit(age, gender, cooldown=30, age_tolerance=2):
                 writer.writerow(['Age', 'Gender', 'Timestamp'])
             writer.writerow([age, gender, timestamp.strftime("%Y-%m-%d %H:%M:%S")])
             print(f"[LOGGER] Logged: {age}, {gender}")
-            last_logged[key] = timestamp  # update last log time
+            last_logged[key] = timestamp  
 
     except Exception as e:
         print(f"[LOGGER ERROR] Failed to write log: {e}")
