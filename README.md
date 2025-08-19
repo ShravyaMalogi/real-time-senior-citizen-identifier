@@ -104,15 +104,13 @@ real-time-senior-citizen-identifier/
 
 ## 🏃 How to Run  
 ```bash
-# Clone the repo
+# Clone the repository
 git clone https://github.com/ShravyaMalogi/real-time-senior-citizen-identifier.git
 cd real-time-senior-citizen-identifier
 
 # Install dependencies
 pip install -r requirements.txt
 
-# Run with webcam
-python app.py --source 0
+# Run the Streamlit app
+streamlit run app.py
 
-# Run on video file
-python app.py --source path/to/video.mp4
