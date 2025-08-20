@@ -24,7 +24,7 @@ quality = st.sidebar.slider("Processing Quality", 10, 100, 50, 10, help="Lower q
 resize_scale = quality / 100.0
 
 # --- Input Selection ---
-input_source = st.radio("Choose input source:", ("Upload Video", "Webcam"), horizontal=True)
+input_source = "Upload Video"
 
 # --- Session State Initialization ---
 if 'webcam_running' not in st.session_state:
@@ -132,40 +132,7 @@ def process_frame(frame, display_frame):
 
 # --- Main UI Logic ---
 def main():
-    if input_source == "Webcam":
-        st.header("📷 Live Webcam Feed")
-        col1, col2 = st.columns(2)
-        if col1.button("Start Webcam", key="start_cam"):
-            st.session_state.webcam_running = True
-        if col2.button("Stop Webcam", key="stop_cam"):
-            st.session_state.webcam_running = False
-
-        stframe = st.empty()
-        if st.session_state.webcam_running:
-            cap = cv2.VideoCapture(0)
-            if not cap.isOpened():
-                st.error("Webcam not found. Please grant access and try again.")
-            else:
-                while st.session_state.webcam_running:
-                    ret, frame = cap.read()
-                    if not ret:
-                        st.error("Failed to capture frame from webcam.")
-                        break
-                    
-                    display_frame = cv2.resize(frame, (0, 0), fx=resize_scale, fy=resize_scale) if resize_scale < 1.0 else frame.copy()
-                    processed_frame = process_frame(frame, display_frame)
-                    stframe.image(cv2.cvtColor(processed_frame, cv2.COLOR_BGR2RGB), channels="RGB")
-                
-                cap.release()
-                # Log any remaining faces when stopping
-                for fid, data in list(st.session_state.active_faces.items()):
-                    if should_log(fid):
-                        log_visit(data['age'], data['gender'])
-                        if data['age'] >= 60:
-                            st.session_state.total_seniors += 1
-                st.session_state.active_faces.clear()
-
-    elif input_source == "Upload Video":
+    if input_source == "Upload Video":
         st.header("🎥 Video File Upload")
         frame_skip = st.sidebar.slider("Frame Skip", 1, 30, 5, help="Process every Nth frame for faster analysis.")
         video_file = st.file_uploader("Upload a video file", type=["mp4", "avi", "mov", "mkv"])
