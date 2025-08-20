@@ -14,7 +14,7 @@ except ImportError:
 custom_objects = {'<lambda>': lambda x: x}
 
 # Load model
-model_path = os.path.join(os.path.dirname(__file__), '..', 'model', 'age_gender_model_finetuned.keras')
+model_path = os.path.join(os.path.dirname(__file__), '..', 'model', 'age_gender_model_v.keras')
 model = load_model(model_path, custom_objects=custom_objects, compile=False)
 
 # Constants
