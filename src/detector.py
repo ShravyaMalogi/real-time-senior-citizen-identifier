@@ -1,14 +1,16 @@
+# src/detector.py
 import numpy as np
 import math
 from mtcnn import MTCNN
 
 class MTCNNFaceDetector:
-    def __init__(self, min_face_size=55, conf_threshold=0.85):
-        self.detector = MTCNN(min_face_size=min_face_size)
+    def __init__(self, conf_threshold=0.5, min_box_size=40):
+        self.detector = MTCNN()
         self.conf_threshold = conf_threshold
+        self.min_box_size = min_box_size
 
     def detect_faces(self, frame_bgr):
-        rgb = frame_bgr[:, :, ::-1]  
+        rgb = frame_bgr[:, :, ::-1]  # BGR → RGB
         detections = self.detector.detect_faces(rgb)
 
         results = []
@@ -18,10 +20,15 @@ class MTCNNFaceDetector:
                 continue
 
             x, y, w, h = det["box"]
+
+            # --- ADDED: Filter out faces that are too small ---
+            if w < self.min_box_size or h < self.min_box_size:
+                continue
+
             x1, y1 = max(0, x), max(0, y)
             x2, y2 = x1 + max(1, w), y1 + max(1, h)
 
-            results.append((x1, y1, x2, y2))  
+            results.append((x1, y1, x2, y2))  # return just tuple
 
         return results
 
@@ -29,7 +36,7 @@ class MTCNNFaceDetector:
 class FaceTracker:
     def __init__(self, max_distance=50, max_age=10):
         self.next_face_id = 0
-        self.tracks = {} 
+        self.tracks = {}  # face_id -> {"box": (x0,y0,x1,y1), "age": 0}
         self.max_distance = max_distance
         self.max_age = max_age
 
@@ -65,11 +72,14 @@ class FaceTracker:
             updated_tracks[assigned_id] = {"box": det, "age": 0}
             results.append((assigned_id, det))
 
+        # Increment "age" for unmatched tracks (memory effect)
         for face_id, data in self.tracks.items():
             if face_id not in updated_tracks:
                 data["age"] += 1
                 if data["age"] < self.max_age:
-                    updated_tracks[face_id] = data 
+                    updated_tracks[face_id] = data  # keep it for a while
 
         self.tracks = updated_tracks
         return results
+
+
