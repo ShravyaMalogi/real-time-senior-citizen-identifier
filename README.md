@@ -88,6 +88,10 @@ real-time-senior-citizen-identifier/
 ---
 
 ## 🖼 Example Output  
+<p align="center">
+  <a href="samples/input/sample_input.mp4">📥 Full sample Input</a><br>
+  <a href="samples/output/sample_output.mp4">📤 Full sample Output</a>
+</p>
 
 <img src="/samples/Visualization.jpg" alt="Sample Output" width="1200"/>
 
