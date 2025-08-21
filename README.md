@@ -1,8 +1,8 @@
 # 👴👵 Real-Time Senior Citizen Identifier  
 
 [![Python](https://img.shields.io/badge/Python-3.x-blue)](https://www.python.org/)  
-[![OpenCV](https://img.shields.io/badge/OpenCV-Computer%20Vision-green)](https://opencv.org/)  
 [![TensorFlow](https://img.shields.io/badge/TensorFlow-2.x-orange)](https://www.tensorflow.org/)  
+[![OpenCV](https://img.shields.io/badge/OpenCV-Computer%20Vision-green)](https://opencv.org/)  
 [![License: MIT](https://img.shields.io/badge/License-MIT-yellow.svg)](https://opensource.org/licenses/MIT)  
 
 > Detect multiple people, predict their age & gender, and identify **senior citizens** in real-time.  
