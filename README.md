@@ -69,7 +69,7 @@ real-time-senior-citizen-identifier/
 - 🧓 Flags individuals **60 years & older**  
 - 📊 Logs details (age, gender, timestamp) to CSV file 
 - 👥 Detects **multiple people** at once  
-- ⚡ Works with **video files**
+- ⚡ Works with video files
 
 ---
 
