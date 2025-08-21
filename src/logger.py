@@ -24,7 +24,6 @@ def log_visit(age, gender, cooldown=30, age_tolerance=5):
 
     if key in st.session_state.last_logged:
         if (timestamp - st.session_state.last_logged[key]) < timedelta(seconds=cooldown):
-            # print(f"[LOGGER] Skipping duplicate log for approx age {age} ({gender})")
             return
 
     try:
