@@ -65,7 +65,7 @@ real-time-senior-citizen-identifier/
 ---
 
 ## 🚀 Features  
-- 🎥 **Real-time** face detection & age prediction  
+- 🎥 **Real-time** face detection and prediction  
 - 🧓 Flags individuals **60 years & older**  
 - 📊 Logs details (age, gender, timestamp) to CSV file 
 - 👥 Detects **multiple people** at once  
