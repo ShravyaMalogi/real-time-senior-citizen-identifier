@@ -9,7 +9,7 @@ class MTCNNFaceDetector:
         self.min_box_size = min_box_size
 
     def detect_faces(self, frame_bgr):
-        rgb = frame_bgr[:, :, ::-1]  # BGR → RGB
+        rgb = frame_bgr[:, :, ::-1]  
         detections = self.detector.detect_faces(rgb)
 
         results = []
@@ -34,7 +34,7 @@ class MTCNNFaceDetector:
 class FaceTracker:
     def __init__(self, max_distance=50, max_age=10):
         self.next_face_id = 0
-        self.tracks = {}  # face_id -> {"box": (x0,y0,x1,y1), "age": 0}
+        self.tracks = {}  
         self.max_distance = max_distance
         self.max_age = max_age
 
@@ -74,7 +74,7 @@ class FaceTracker:
             if face_id not in updated_tracks:
                 data["age"] += 1
                 if data["age"] < self.max_age:
-                    updated_tracks[face_id] = data  # keep it for a while
+                    updated_tracks[face_id] = data  
 
         self.tracks = updated_tracks
         return results
