@@ -6,7 +6,7 @@ import sys
 import numpy as np
 import time
 from collections import defaultdict, deque
-from facenet-mtcnn import MTCNN
+from mtcnn import MTCNN
 import tensorflow as tf
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), 'src')))
