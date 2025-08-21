@@ -1,6 +1,6 @@
 import numpy as np
 import math
-from facenet-mtcnn import MTCNN
+from mtcnn import MTCNN
 
 class MTCNNFaceDetector:
     def __init__(self, conf_threshold=0.5, min_box_size=40):
