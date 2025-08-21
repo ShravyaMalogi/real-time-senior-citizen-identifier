@@ -20,14 +20,13 @@ class MTCNNFaceDetector:
 
             x, y, w, h = det["box"]
 
-            # --- ADDED: Filter out faces that are too small ---
             if w < self.min_box_size or h < self.min_box_size:
                 continue
 
             x1, y1 = max(0, x), max(0, y)
             x2, y2 = x1 + max(1, w), y1 + max(1, h)
 
-            results.append((x1, y1, x2, y2))  # return just tuple
+            results.append((x1, y1, x2, y2))  
 
         return results
 
@@ -71,7 +70,6 @@ class FaceTracker:
             updated_tracks[assigned_id] = {"box": det, "age": 0}
             results.append((assigned_id, det))
 
-        # Increment "age" for unmatched tracks (memory effect)
         for face_id, data in self.tracks.items():
             if face_id not in updated_tracks:
                 data["age"] += 1
