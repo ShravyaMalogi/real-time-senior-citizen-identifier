@@ -7,25 +7,12 @@ import numpy as np
 import time
 from collections import defaultdict, deque
 from mtcnn import MTCNN
-import tensorflow as tf
 
 sys.path.append(os.path.abspath(os.path.join(os.path.dirname(__file__), 'src')))
 
 from detector import FaceTracker
 from predictor import predict_age_gender
 from logger import log_visit
-
-st.sidebar.title("System Status")
-gpus = tf.config.list_physical_devices('GPU')
-if gpus:
-    try:
-        for gpu in gpus:
-            tf.config.experimental.set_memory_growth(gpu, True)
-        st.sidebar.success(f"✅ GPU Detected: {len(gpus)} device(s) found. Using GPU for processing.")
-    except RuntimeError as e:
-        st.sidebar.error(f"GPU Error: {e}")
-else:
-    st.sidebar.warning("⚠️ No GPU detected. Processing will run on CPU, which may be slow.")
 
 st.title("👵 Real-Time Senior Citizen Identifier")
 
