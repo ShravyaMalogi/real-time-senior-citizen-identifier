@@ -1,4 +1,3 @@
-# src/detector.py
 import numpy as np
 import math
 from mtcnn import MTCNN
@@ -81,5 +80,3 @@ class FaceTracker:
 
         self.tracks = updated_tracks
         return results
-
-
