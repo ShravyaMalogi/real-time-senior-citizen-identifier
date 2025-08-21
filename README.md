@@ -17,15 +17,6 @@ It also logs the **age, gender, and timestamp** of each senior citizen to a CSV 
 
 ---
 
-## 🚀 Features  
-- 🎥 **Real-time** face detection & age prediction  
-- 🧓 Flags individuals **60 years & older**  
-- 📊 Logs details (age, gender, timestamp) to CSV file 
-- 👥 Detects **multiple people** at once  
-- ⚡ Works with **video files**
-
----
-
 ## 📂 Repository Structure
 
 ```
@@ -73,6 +64,15 @@ real-time-senior-citizen-identifier/
 
 ---
 
+## 🚀 Features  
+- 🎥 **Real-time** face detection & age prediction  
+- 🧓 Flags individuals **60 years & older**  
+- 📊 Logs details (age, gender, timestamp) to CSV file 
+- 👥 Detects **multiple people** at once  
+- ⚡ Works with **video files**
+
+---
+
 ## 📂 Dataset  
 - **Source:** [UTK-Face Dataset](https://www.kaggle.com/datasets/jangedoo/utkface-new)  
 - **Format Used:** Pre-cropped faces about 20,000+ in number  
@@ -87,13 +87,13 @@ real-time-senior-citizen-identifier/
 
 ---
 
-## 📈 Example Output  
+## 🖼 Example Output  
 
 <img src="/samples/Visualization.jpg" alt="Sample Output" width="1200"/>
 
 ---
 
-## 🏃 How to Run  
+## ▶️ How to Run  
 ```bash
 # Clone the repository
 git clone https://github.com/ShravyaMalogi/real-time-senior-citizen-identifier.git
