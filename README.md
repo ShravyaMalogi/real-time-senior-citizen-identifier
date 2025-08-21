@@ -66,7 +66,7 @@ real-time-senior-citizen-identifier/
 
 ## 🚀 Features  
 - 🎥 **Real-time** face detection and prediction  
-- 🧓 Flags individuals **60 years & older**  
+- 🧓 Flags individuals **60 years & older** as senior citizens 
 - 📊 Logs details (age, gender, timestamp) to CSV file 
 - 👥 Detects **multiple people** at once  
 - ⚡ Works with video files
@@ -82,7 +82,7 @@ real-time-senior-citizen-identifier/
 ## 📜 How It Works  
 1. **Detection** → MTCNN detects faces in the frame  
 2. **Prediction** → Age & gender prediction model processes each face  
-3. **Filtering** → Marks people aged 60+ as seniors  
+3. **Filtering** → Marks people aged 60+ with red bounding boxes  
 4. **Logging** → Saves details in `visit_log.csv`  
 
 ---
