@@ -97,7 +97,18 @@ real-time-senior-citizen-identifier/
 
 ---
 
-## ▶️ How to Run  
+## ▶️ How to Run
+
+In GitHub Codespaces
+```bash
+# Install dependencies
+pip install -r requirements.txt
+
+# Run the Streamlit app
+streamlit run app.py
+```
+
+On Local System
 ```bash
 # Clone the repository
 git clone https://github.com/ShravyaMalogi/real-time-senior-citizen-identifier.git
