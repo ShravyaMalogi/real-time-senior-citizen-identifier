@@ -14,6 +14,21 @@ from detector import FaceTracker
 from predictor import predict_age_gender
 from logger import log_visit
 
+# --- GPU Configuration Check ---
+st.sidebar.title("System Status")
+gpus = tf.config.list_physical_devices('GPU')
+if gpus:
+    try:
+        # Set memory growth to avoid allocating all memory at once
+        for gpu in gpus:
+            tf.config.experimental.set_memory_growth(gpu, True)
+        st.sidebar.success(f"✅ GPU Detected: {len(gpus)} device(s) found. Using GPU for processing.")
+    except RuntimeError as e:
+        st.sidebar.error(f"GPU Error: {e}")
+else:
+    st.sidebar.warning("⚠️ No GPU detected. Processing will run on CPU, which may be slow.")
+# --- End GPU Configuration Check ---
+
 st.title("👵 Real-Time Senior Citizen Identifier")
 
 video_file = st.file_uploader("📤 Upload a Video", type=["mp4", "avi", "mov"])
