@@ -9,7 +9,7 @@ class MTCNNFaceDetector:
         self.min_box_size = min_box_size
 
     def detect_faces(self, frame_bgr):
-        rgb = frame_bgr[:, :, ::-1]  
+        rgb = frame_bgr[:, :, ::-1]  #BGR to RGB
         detections = self.detector.detect_faces(rgb)
 
         results = []
