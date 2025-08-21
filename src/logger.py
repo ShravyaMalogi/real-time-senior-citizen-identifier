@@ -14,7 +14,6 @@ def log_visit(age, gender, cooldown=30, age_tolerance=5):
     Uses st.session_state to maintain the log across reruns.
     Age predictions are considered the same if within `age_tolerance`.
     """
-    # Initialize the logger's memory in session state if it doesn't exist
     if 'last_logged' not in st.session_state:
         st.session_state.last_logged = {}
 
