@@ -7,7 +7,6 @@ os.makedirs(LOG_DIR, exist_ok=True)
 
 LOG_FILE = os.path.join(LOG_DIR, 'visit_log.csv')
 
-# Keep track of last logged visits
 last_logged = {}
 
 def log_visit(age, gender, cooldown=30, age_tolerance=2):
